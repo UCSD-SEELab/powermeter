@@ -22,4 +22,4 @@ pip2 install -e .
 
 A [simple demo](./demo/demo_simple.py) is included for reference.
 
-In the demo, detailed traces will be saved to a text file, while a `callback` function is used to receive time-power tuples.
+In the demo, detailed traces will be saved to a text file, while a `callback` function is used to receive time-power tuples. The default units for time and power are **Seconds** and **Watts** respectively. 
