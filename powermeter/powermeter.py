@@ -10,6 +10,8 @@ import serial, select
 import time
 import signal
 
+PORT = "/dev/ttyUSB0"
+
 def get_time_milli():
     return int(time.time() * 1000)
 
@@ -28,7 +30,7 @@ class PowerMeter(object):
             self.f.write("\n")
 
     def init_psu(self):
-        psu = serial.Serial("/dev/ttyUSB0", 9600, timeout=0.1)
+        psu = serial.Serial(PORT, 9600, timeout=0.1)
         psu.flush()
         psu.flushInput()
         psu.flushOutput()
@@ -122,6 +124,10 @@ class PowerMeter(object):
     # Start asynchronous measurement 
     # The created loop can be terminated using stop()
     def run(self, callback=None):
+        # check whether the port exists
+        if not os.path.exists(PORT):
+            raise Exception('Please connect the power meter to host!')
+
         # Create file
         if self.filename is not None:
             self.f = open(self.filename, "w")

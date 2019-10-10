@@ -9,7 +9,10 @@ import time
 from powermeter import PowerMeter
 
 PWR_FILE = "./power.txt"
-MEASURE_TIME = 30
+MEASURE_TIME = 10
+MSG = "Collecting power measurements for {} seconds...\r\n".format(
+        MEASURE_TIME)
+MSG += "Check {} for detailed traces afterwards.".format(PWR_FILE) 
 
 """
 Callback function that reads power from module.
@@ -17,14 +20,17 @@ This function is responsible for recording time stamps
 that receive the power measurements.
 
 Args:
-    pwr (float): the power measurement in mW.
+    pwr (float): the power measurement in W.
+Data Format:
+    pwr_callback.start_time (float): the time that first data comes in, seconds
+    pwr_callback.pwr_data: [time stamp (s), power (W)]
 """
 def pwr_callback(pwr):
     if pwr_callback.start_time is None:
-        pwr_callback.start_time = time.time() * 1000
+        pwr_callback.start_time = time.time()
 
     pwr_callback.pwr_data.append(
-        [float(time.time * 1000 - pwr_callback.start_time), pwr]
+        [float(time.time() - pwr_callback.start_time), pwr]
     )
 
 pwr_callback.pwr_data = []
@@ -32,16 +38,20 @@ pwr_callback.start_time = None
 
 """
 main
-Start measurement for 30s, save traces to PWR_FILE,
+Start measurement for 10s, save traces to PWR_FILE,
 and return all power values in pwr_callback.pwr_data.
 """
 def main():
     pm = PowerMeter(PWR_FILE)
     pm.run(pwr_callback)
 
+    print(MSG)
     time.sleep(MEASURE_TIME)
 
     pm.stop()
-    print(pwr_callback.pwr_data)
+
+    for p in pwr_callback.pwr_data:
+        print(p)
 
 if __name__ == '__main__':
+    main()

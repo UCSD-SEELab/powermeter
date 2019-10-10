@@ -165,3 +165,6 @@ venv.bak/
 
 # Vim swaps
 *.sw*
+
+# example power traces
+*.txt
