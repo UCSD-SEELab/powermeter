@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-"""
+'''
 A simple power reading demo for powermeter
-"""
+'''
 import os
 import time
 
@@ -14,18 +14,19 @@ MSG = "Collecting power measurements for {} seconds...\r\n".format(
         MEASURE_TIME)
 MSG += "Check {} for detailed traces afterwards.".format(PWR_FILE) 
 
-"""
-Callback function that reads power from module.
-This function is responsible for recording time stamps
-that receive the power measurements.
-
-Args:
-    pwr (float): the power measurement in W.
-Data Format:
-    pwr_callback.start_time (float): the time that first data comes in, seconds
-    pwr_callback.pwr_data: [time stamp (s), power (W)]
-"""
 def pwr_callback(pwr):
+    '''
+    Callback function that reads power from module.
+    This function is responsible for recording time stamps
+    that receive the power measurements.
+
+    Args:
+        pwr (float): the power measurement in W.
+    
+    Attributes:
+        pwr_callback.start_time (float): the time that first data comes in, seconds
+        pwr_callback.pwr_data: [time stamp (s), power (W)]
+    '''
     if pwr_callback.start_time is None:
         pwr_callback.start_time = time.time()
 
@@ -36,12 +37,12 @@ def pwr_callback(pwr):
 pwr_callback.pwr_data = []
 pwr_callback.start_time = None
 
-"""
-main
-Start measurement for 10s, save traces to PWR_FILE,
-and return all power values in pwr_callback.pwr_data.
-"""
-def main():
+def main():    
+    '''
+    main function
+    Start measurement for 10s, save traces to PWR_FILE,
+    and return all power values in pwr_callback.pwr_data.
+    '''
     pm = PowerMeter(PWR_FILE)
     pm.run(pwr_callback)
 
