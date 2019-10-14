@@ -9,6 +9,7 @@ import threading
 import serial, select
 import time
 import signal
+from functools import reduce
 
 PORT = "/dev/ttyUSB0"
 
@@ -35,22 +36,22 @@ class PowerMeter(object):
         psu.flushInput()
         psu.flushOutput()
 
-        psu.write("\r\n")
+        psu.write(b"\r\n")
         #time.sleep(1)
-        #psu.write("*IDN?\r\n")
-        #psu.write(":MEASure?\r\n")
+        #psu.write(b"*IDN?\r\n")
+        #psu.write(b":MEASure?\r\n")
 
-        psu.write(":HEAD OFF\r\n") # no header
+        psu.write(bytes(":HEAD OFF\r\n", 'UTF-8')) # no header
 
-        #psu.write(":DATAout:ITEM 2,0\r\n"); item = "current" # for current
-        #psu.write(":DATAout:ITEM 4,0\r\n"); item = "power" # for power
-        #psu.write(":DATAout:ITEM 1,0\r\n"); item = "volt" # for voltage
-        psu.write(":DATAout:ITEM 35,0\r\n"); item = "volt,curr,pf" # for more details
-        #psu.write(":DATAout:ITEM?\r\n")
+        #psu.write(b":DATAout:ITEM 2,0\r\n"); item = "current" # for current
+        #psu.write(b":DATAout:ITEM 4,0\r\n"); item = "power" # for power
+        #psu.write(b":DATAout:ITEM 1,0\r\n"); item = "volt" # for voltage
+        psu.write(b":DATAout:ITEM 35,0\r\n"); item = "volt,curr,pf" # for more details
+        #psu.write(b":DATAout:ITEM?\r\n")
         #time.sleep(1)
 
-        #psu.write(":CURR:RANG 0.1\r\n") # Current range to minimum
-        #psu.write(":CURR:RANG 1.0\r\n") # Current range to minimum
+        #psu.write(b":CURR:RANG 0.1\r\n") # Current range to minimum
+        #psu.write(b":CURR:RANG 1.0\r\n") # Current range to minimum
 
         return psu, item
 
@@ -72,14 +73,15 @@ class PowerMeter(object):
         bTypeError = False
         while self.is_loop_running:
             if bNeedtoMeasure == True:
-                psu.write(":MEAS?\r\n")
+                psu.write(b":MEAS?\r\n")
                 bNeedtoMeasure = False
 
             try:
                 read_char = psu.read()
+                read_char = read_char.decode('UTF-8')
             except serial.serialutil.SerialException:
                 break
-            except select.error, v:
+            except (select.error, v):
                 break
 
             try:
