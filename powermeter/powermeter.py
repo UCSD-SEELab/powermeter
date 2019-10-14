@@ -41,7 +41,7 @@ class PowerMeter(object):
         #psu.write(b"*IDN?\r\n")
         #psu.write(b":MEASure?\r\n")
 
-        psu.write(bytes(":HEAD OFF\r\n", 'UTF-8')) # no header
+        psu.write(b":HEAD OFF\r\n") # no header
 
         #psu.write(b":DATAout:ITEM 2,0\r\n"); item = "current" # for current
         #psu.write(b":DATAout:ITEM 4,0\r\n"); item = "power" # for power
