@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 '''
 A simple power reading demo for powermeter
@@ -12,7 +12,7 @@ PWR_FILE = "./power.txt"
 MEASURE_TIME = 10
 MSG = "Collecting power measurements for {} seconds...\r\n".format(
         MEASURE_TIME)
-MSG += "Check {} for detailed traces afterwards.".format(PWR_FILE) 
+MSG += "Check {} for detailed traces afterwards.".format(PWR_FILE)
 
 def pwr_callback(pwr):
     '''
@@ -22,7 +22,7 @@ def pwr_callback(pwr):
 
     Args:
         pwr (float): the power measurement in W.
-    
+
     Attributes:
         pwr_callback.start_time (float): the time that first data comes in, seconds
         pwr_callback.pwr_data: [time stamp (s), power (W)]
@@ -37,7 +37,7 @@ def pwr_callback(pwr):
 pwr_callback.pwr_data = []
 pwr_callback.start_time = None
 
-def main():    
+def main():
     '''
     main function
     Start measurement for 10s, save traces to PWR_FILE,

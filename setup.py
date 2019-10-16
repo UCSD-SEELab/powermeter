@@ -7,7 +7,7 @@ SHORT_DESCRIPTION = (
     'Python module for HIOKI 3334 power meter in SEELab.'
 )
 
-VERSION = '1.0'
+VERSION = '2.0'
 
 DEPENDENCIES = [
     'pyserial'
@@ -20,6 +20,6 @@ setup(
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=['powermeter'],
-    python_requires='>=2.7.13',
+    python_requires='>=3.5.3',
     install_requires=DEPENDENCIES
 )
