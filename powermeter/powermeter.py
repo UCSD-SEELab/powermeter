@@ -132,7 +132,7 @@ class PowerMeter(object):
 
         # Create file
         if self.filename is not None:
-            self.f = open(self.filename, "w")
+            self.f = open(self.filename, "w+")
         else:
             self.f = None
         self.callback = callback
