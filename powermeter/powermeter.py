@@ -1,7 +1,7 @@
-#!/usr/bin/python 
+#!/usr/bin/python
 
 # Yeseong Kim, UCSD 2017-2018,
-# Reading total power consumption from HIOKI 3334 multimeter 
+# Reading total power consumption from HIOKI 3334 multimeter
 # This is forked from the old serial_measurement script.
 import sys
 import os
@@ -40,7 +40,7 @@ class PowerMeter(object):
         #psu.write("*IDN?\r\n")
         #psu.write(":MEASure?\r\n")
 
-        psu.write(":HEAD OFF\r\n") # no header 
+        psu.write(":HEAD OFF\r\n") # no header
 
         #psu.write(":DATAout:ITEM 2,0\r\n"); item = "current" # for current
         #psu.write(":DATAout:ITEM 4,0\r\n"); item = "power" # for power
@@ -57,14 +57,14 @@ class PowerMeter(object):
     # ** Recommend not to use this function as an external function **
     # ** Instead, use run(self) for async running
     def run_in_loop(self):
-        # Initialize PSU and header 
+        # Initialize PSU and header
         psu, item = self.init_psu()
         extra_item_size = item.count(',')
         if extra_item_size > 0:
             item += ",mul"
         self.log("time_stamp," + item)
 
-        # Start of the loop 
+        # Start of the loop
         self.is_loop_running = True
         bNeedtoMeasure = True
         read_idx = 0
@@ -107,7 +107,7 @@ class PowerMeter(object):
                     if extra_item_size > 0:
                         # multiply everything: power
                         mul = reduce(lambda x, y: x*y, vallist)
-                        output_str += "," + str(mul) 
+                        output_str += "," + str(mul)
                         if self.callback is not None:
                             self.callback(mul)
 
@@ -121,7 +121,7 @@ class PowerMeter(object):
 
         psu.close()
 
-    # Start asynchronous measurement 
+    # Start asynchronous measurement
     # The created loop can be terminated using stop()
     def run(self, callback=None):
         # check whether the port exists
@@ -130,7 +130,7 @@ class PowerMeter(object):
 
         # Create file
         if self.filename is not None:
-            self.f = open(self.filename, "w")
+            self.f = open(self.filename, "w+")
         else:
             self.f = None
         self.callback = callback
@@ -139,7 +139,7 @@ class PowerMeter(object):
         self.loop_thread = threading.Thread(target=self.run_in_loop)
         self.loop_thread.start()
 
-    # Finish the created asynchronous measurement 
+    # Finish the created asynchronous measurement
     def stop(self):
         # Stop running thread
         assert(self.loop_thread is not None)
