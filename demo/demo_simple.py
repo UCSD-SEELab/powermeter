@@ -28,10 +28,10 @@ def pwr_callback(pwr):
         pwr_callback.pwr_data: [time stamp (s), power (W)]
     '''
     if pwr_callback.start_time is None:
-        pwr_callback.start_time = time.time()
+        pwr_callback.start_time = time.time() * 1000 # in ms
 
     pwr_callback.pwr_data.append(
-        [float(time.time() - pwr_callback.start_time), pwr]
+        [float(time.time() * 1000 - pwr_callback.start_time) / 1000, pwr]
     )
 
 pwr_callback.pwr_data = []
