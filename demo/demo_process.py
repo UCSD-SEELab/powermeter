@@ -8,11 +8,6 @@ import numpy as np
 import os
 import time
 from powermeter import PowerMeter
-import RPi.GPIO as GPIO
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.IN)
 
 PWR_FILE = "./power.txt"
 LOG_FILE = "./log.txt"
@@ -75,26 +70,16 @@ def main():
     Start measurement for 10s, save traces to PWR_FILE,
     and return all power values in pwr_callback.pwr_data.
     '''
-
     pm = PowerMeter(PWR_FILE)
-    #print("waiting")
-    #while(GPIO.input(4) == 0):
-        #pass
     pm.run(pwr_callback)
-    #print(MSG)
     time.sleep(MEASURE_TIME)
-    for i in range(10000000):
-        pass
-    #while(GPIO.input(4) == 1):
-        #pass
     pm.stop()
-    #print("stopped")
 
     # select several time intervals and write into log file
     log_file = open(LOG_FILE, "w+")
     i = 1
     while i < len(pwr_callback.pwr_data) - 5:
-        phase = "{},{}\n".format(pwr_callback.pwr_data[i][0], 
+        phase = "{},{}\n".format(pwr_callback.pwr_data[i][0],
                 pwr_callback.pwr_data[i+5][0])
         log_file.write(phase)
         i = i + 10
