@@ -4,7 +4,7 @@ This is a Python module for the HIOKI 3334 power meter in SEELab.
 
 ## Installation
 
-Download the desired version from the release page and decompress it. `cd` into it, then:
+Download the desired version from the corresponding branch (`master` for Python >= 3.7, `py2.7` for Python >= 2.7) and decompress it. `cd` into it, then:
 
 ```shell
 # for v1.0 and Python 2.7
@@ -12,8 +12,6 @@ pip2 install .
 # or for v2.0 and Python 3.5
 pip3 install .
 ```
-
-Note that v1.0 works for Python 2.7, while the current version in this repo (v2.0) supports Python 3.5.
 
 By default, the module will be installed to your packages library for Python. However, if you do want to install the module in "editable" mode, which will be based on the code in the current directory:
 
@@ -24,8 +22,22 @@ pip2 install -e .
 pip3 install -e .
 ```
 
-## Demo
+## Demos
 
-A [simple demo](./demo/demo_simple.py) is included for reference.
+There are several handy demos included in the `demo` folder:
 
-In the demo, detailed traces will be saved to a text file, while a `callback` function is used to receive time-power tuples. The default units for time and power are **Seconds** and **Watts** respectively. 
+* [simple demo](./demo/demo_simple.py)
+
+This demo shows how to create a separate thread for power monitoring and how to receive data with a `callback` function. The measured traces ([time(s), power(mW)] pairs) will be logged into a text file.
+
+* [animation demo](./demo/demo_animate.py)
+
+This demo shows how to create a simple animation to view the power traces in real-time.
+
+* [energy processing demo](./demo/demo_energy/)
+
+This demo provides a processing script to calculate the energy for each phase based on the record time stamp.
+
+## Notes
+
+* The current version with animation and processing demos have not been thoroughly tested, thus the release is not ready. The prior release only includes the simple demo.
