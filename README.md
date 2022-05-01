@@ -45,4 +45,25 @@ This demo provides a processing script to calculate the energy for each phase ba
 
 ## Notes
 
-* The current version with animation and processing demos have not been thoroughly tested, thus the release is not ready. The prior release only includes the simple demo.
+* The automatically generated log file `PWR_FILE` when creating the powermeter as `pm = PowerMeter(PWR_FILE)`, adopts the following format:
+  ```
+  time_stamp,volt,curr,pf,mul
+  1651386186231,123.4,0.0625,0.512,3.9488000000000003
+  1651386186276,123.4,0.0625,0.512,3.9488000000000003
+  ...
+  ```
+
+  * `time_stamp`: the system sampling time in millisecond
+  * `volt`: the votage in V
+  * `curr`: the current in A
+  * `pf`: the power factor which is a specific parameter for HIOKI 3334
+  * `mul`: the measured power in W, which results from `volt*curr*pf`
+
+## Cite the powermeter
+
+```
+@misc{hioki3334,
+  title = {{Hioki3334 Powermeter}},
+  howpublished = {\url{https://www.hioki.com/en/products/detail/?product_key=5812}},
+}
+```
