@@ -30,16 +30,16 @@ There are several handy demos included in the `demo` folder:
 
 This demo shows how to create a separate thread for power monitoring and how to receive data with a `callback` function. The measured traces ([time(s), power(mW)] pairs) will be logged into a text file.
 
-* [ethernet power measurement demo](./demo/demo_energy/)
+* [ethernet power measurement demo](./demo/demo_ethernet.py/)
 
 This demo assumes two RPis in the setup: one RPi for running the workloads, and the other RPi for measuring the power of that RPi.
 Two RPis are connected via an Ethernet cable, where simple signals are sent to indicate the start and the end of the workload.
 
-* [animation demo](./demo/demo_animate.py)
+* [animation demo](./demo/demo_animation.py)
 
 This demo shows how to create a simple animation to view the power traces in real-time.
 
-* [energy processing demo](./demo/demo_energy/)
+* [energy processing demo](./demo/demo_process/)
 
 This demo provides a processing script to calculate the energy for each phase based on the record time stamp.
 
